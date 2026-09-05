@@ -15,7 +15,7 @@ A bilingual (English & Arabic) responsive portfolio website showcasing machine l
 *   **Detailed Project Showcase**: Dynamically populated project grids highlighting technical tools, methodologies, and source code / demonstration links.
 *   **Professional Experience Timeline**: Structured timeline displaying work history, roles, and key accomplishments.
 *   **Certificates Gallery**: Visual showcase of professional certifications and achievements.
-*   **Blog / Posts Section**: Curated content section for articles, insights, and technical write-ups.
+*   **Blog / Posts Section**: Read-only curated content section for articles, insights, and technical write-ups with search, category filtering, and likes.
 *   **Downloadable CV**: One-click PDF download of the full CV directly from the About section.
 *   **Functional Contact Form**: Direct message delivery to the portfolio owner using client-side EmailJS integration.
 

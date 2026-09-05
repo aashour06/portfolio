@@ -6,16 +6,6 @@ export default function Posts() {
     const { t, lang } = useLang()
     const ref = useRef(null)
 
-    // User-created posts stored in localStorage
-    const [userPosts, setUserPosts] = useState(() => {
-        try {
-            const saved = localStorage.getItem('portfolio_user_posts')
-            return saved ? JSON.parse(saved) : []
-        } catch {
-            return []
-        }
-    })
-
     // Likes stored in localStorage
     const [likes, setLikes] = useState(() => {
         try {
@@ -28,22 +18,11 @@ export default function Posts() {
 
     const [activeCategory, setActiveCategory] = useState('All')
     const [searchQuery, setSearchQuery] = useState('')
-    const [isCreateOpen, setIsCreateOpen] = useState(false)
     const [activePost, setActivePost] = useState(null)
     const [toastMessage, setToastMessage] = useState('')
 
-    // Form state
-    const [formData, setFormData] = useState({
-        title: '',
-        category: '',
-        tags: '',
-        summary: '',
-        content: '',
-    })
-
-    // Combine user posts with default localized posts
-    const defaultPosts = t.posts.defaultPosts || []
-    const allPosts = [...userPosts, ...defaultPosts]
+    // Default localized posts
+    const allPosts = t.posts.defaultPosts || []
 
     // Reset active category when language changes to 'All'
     useEffect(() => {
@@ -64,7 +43,6 @@ export default function Posts() {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
-                setIsCreateOpen(false)
                 setActivePost(null)
             }
         }
@@ -86,65 +64,6 @@ export default function Posts() {
         })
     }
 
-    const handleDeletePost = (postId, e) => {
-        e?.stopPropagation()
-        if (window.confirm(t.posts.deleteConfirm)) {
-            setUserPosts(prev => {
-                const updated = prev.filter(p => p.id !== postId)
-                localStorage.setItem('portfolio_user_posts', JSON.stringify(updated))
-                return updated
-            })
-            if (activePost?.id === postId) {
-                setActivePost(null)
-            }
-            showToast(lang === 'ar' ? 'تم حذف المنشور بنجاح' : 'Post deleted successfully')
-        }
-    }
-
-    const handleCreatePost = (e) => {
-        e.preventDefault()
-        if (!formData.title.trim() || !formData.summary.trim() || !formData.content.trim()) {
-            return
-        }
-
-        const wordsCount = formData.content.trim().split(/\s+/).length
-        const estimatedMinutes = Math.max(1, Math.ceil(wordsCount / 150))
-        const readTimeStr = `${estimatedMinutes} ${t.posts.readTime}`
-
-        const now = new Date()
-        const dateStr = now.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', {
-            month: 'short',
-            year: 'numeric'
-        })
-
-        const categoryVal = formData.category || (t.posts.categories && t.posts.categories[0]) || 'Machine Learning'
-
-        const newPost = {
-            id: 'user-post-' + Date.now(),
-            title: formData.title.trim(),
-            category: categoryVal,
-            date: dateStr,
-            readTime: readTimeStr,
-            tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : ['Tech'],
-            summary: formData.summary.trim(),
-            content: formData.content.trim(),
-            isUserPost: true,
-        }
-
-        const updated = [newPost, ...userPosts]
-        setUserPosts(updated)
-        localStorage.setItem('portfolio_user_posts', JSON.stringify(updated))
-
-        setFormData({
-            title: '',
-            category: '',
-            tags: '',
-            summary: '',
-            content: '',
-        })
-        setIsCreateOpen(false)
-        showToast(lang === 'ar' ? 'تم نشر منشورك بنجاح! 🚀' : 'Your post has been published! 🚀')
-    }
 
     const handleShare = (post) => {
         navigator.clipboard?.writeText(window.location.origin + '#blog')
@@ -176,7 +95,7 @@ export default function Posts() {
                 <div className="divider reveal" />
                 <p className="section-subtitle reveal">{t.posts.subtitle}</p>
 
-                {/* ── Controls Bar: Search & Create Post Button ── */}
+                {/* ── Controls Bar: Search ── */}
                 <div className="posts__controls reveal">
                     <div className="posts__search-wrap">
                         <span className="posts__search-icon">
@@ -193,17 +112,6 @@ export default function Posts() {
                             onChange={e => setSearchQuery(e.target.value)}
                         />
                     </div>
-
-                    <button
-                        className="btn btn-gold posts__create-btn"
-                        onClick={() => setIsCreateOpen(true)}
-                    >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        {t.posts.createBtn}
-                    </button>
                 </div>
 
                 {/* ── Category Filter Pills ── */}
@@ -234,9 +142,6 @@ export default function Posts() {
                                         <div className="post-card__header">
                                             <div className="post-card__meta-left">
                                                 <span className="post-card__cat">{post.category}</span>
-                                                {post.isUserPost && (
-                                                    <span className="post-card__user-badge">{t.posts.yourPostBadge}</span>
-                                                )}
                                             </div>
                                             <span className="post-card__read-time">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -286,19 +191,6 @@ export default function Posts() {
                                                     </svg>
                                                     {postLikes}
                                                 </button>
-
-                                                {post.isUserPost && (
-                                                    <button
-                                                        className="post-card__delete-btn"
-                                                        onClick={(e) => handleDeletePost(post.id, e)}
-                                                        title={t.posts.deleteBtn}
-                                                    >
-                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                        </svg>
-                                                    </button>
-                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -314,109 +206,7 @@ export default function Posts() {
                 </div>
             </div>
 
-            {/* ── Modal: Create Post ── */}
-            {isCreateOpen && (
-                <div
-                    className="posts-modal-backdrop"
-                    onClick={() => setIsCreateOpen(false)}
-                >
-                    <div
-                        className="posts-modal"
-                        onClick={e => e.stopPropagation()}
-                    >
-                        <button
-                            className="posts-modal__close"
-                            onClick={() => setIsCreateOpen(false)}
-                            aria-label={t.posts.closeModal}
-                        >
-                            ✕
-                        </button>
 
-                        <h3 className="posts-modal__title">{t.posts.modalCreateTitle}</h3>
-                        <p className="posts-modal__desc">{t.posts.modalCreateDesc}</p>
-
-                        <form className="posts-form" onSubmit={handleCreatePost}>
-                            <div className="posts-form__group">
-                                <label className="posts-form__label">{t.posts.inputTitle}</label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="posts-form__input"
-                                    placeholder={t.posts.inputTitlePlaceholder}
-                                    value={formData.title}
-                                    onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                />
-                            </div>
-
-                            <div className="posts-form__row">
-                                <div className="posts-form__group">
-                                    <label className="posts-form__label">{t.posts.inputCategory}</label>
-                                    <select
-                                        className="posts-form__select"
-                                        value={formData.category}
-                                        onChange={e => setFormData({ ...formData, category: e.target.value })}
-                                    >
-                                        {(t.posts.categories || []).map(cat => (
-                                            <option key={cat} value={cat}>{cat}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="posts-form__group">
-                                    <label className="posts-form__label">{t.posts.inputTags}</label>
-                                    <input
-                                        type="text"
-                                        className="posts-form__input"
-                                        placeholder={t.posts.inputTagsPlaceholder}
-                                        value={formData.tags}
-                                        onChange={e => setFormData({ ...formData, tags: e.target.value })}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="posts-form__group">
-                                <label className="posts-form__label">{t.posts.inputSummary}</label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="posts-form__input"
-                                    placeholder={t.posts.inputSummaryPlaceholder}
-                                    value={formData.summary}
-                                    onChange={e => setFormData({ ...formData, summary: e.target.value })}
-                                />
-                            </div>
-
-                            <div className="posts-form__group">
-                                <label className="posts-form__label">{t.posts.inputContent}</label>
-                                <textarea
-                                    required
-                                    rows="6"
-                                    className="posts-form__textarea"
-                                    placeholder={t.posts.inputContentPlaceholder}
-                                    value={formData.content}
-                                    onChange={e => setFormData({ ...formData, content: e.target.value })}
-                                />
-                            </div>
-
-                            <div className="posts-form__actions">
-                                <button
-                                    type="button"
-                                    className="btn btn-outline"
-                                    onClick={() => setIsCreateOpen(false)}
-                                >
-                                    {t.posts.cancel}
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-gold"
-                                >
-                                    {t.posts.submitPublish}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
 
             {/* ── Modal: Post Reader ── */}
             {activePost && (
