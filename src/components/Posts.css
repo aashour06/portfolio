@@ -39,17 +39,16 @@
 /* ── Posts Controls Header ── */
 .posts__controls {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 16px;
     margin-bottom: 32px;
 }
 
 .posts__search-wrap {
     position: relative;
-    flex: 1 1 280px;
-    max-width: 420px;
+    width: 100%;
+    max-width: 480px;
 }
 
 .posts__search-icon {
@@ -575,14 +574,10 @@
 
 @media (max-width: 768px) {
     .posts__controls {
-        flex-direction: column;
-        align-items: stretch;
+        justify-content: center;
     }
     .posts__search-wrap {
         max-width: 100%;
-    }
-    .posts__create-btn {
-        justify-content: center;
     }
     .posts-modal {
         padding: 24px 18px;
