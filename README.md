@@ -1,6 +1,6 @@
 # Ahmed Ali Ashour — Data Science & ML Engineering Portfolio
 
-🔗 **Live Demo**: [project-crx3m.vercel.app](https://project-crx3m.vercel.app/)
+🔗 **Live Demo**: [ahmed-ali-ashour.vercel.app](https://ahmed-ali-ashour.vercel.app/)
 
 A bilingual (English & Arabic) responsive portfolio website showcasing machine learning models, data science projects, and analytical skills. The application is built using React 19, Vite, and Vanilla CSS, featuring custom interactive animations, a particle background, and a backend-free contact system powered by EmailJS.
 
