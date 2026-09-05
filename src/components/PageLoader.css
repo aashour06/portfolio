@@ -1,0 +1,9 @@
+.page-loader__bar-track,
+.page-loader__bar-fill {
+    /* prevent transition-property inheritance from body * rule */
+    transition-property: none !important;
+}
+
+.page-loader__bar-fill {
+    transition: width 0.1s linear !important;
+}

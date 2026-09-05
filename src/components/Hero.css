@@ -1,0 +1,304 @@
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+}
+
+/* Animated gradient mesh background */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(200, 149, 46, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 60%, rgba(154, 110, 28, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(232, 179, 74, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    animation: meshMove 20s ease-in-out infinite;
+}
+
+@keyframes meshMove {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.hero__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.hero__glow--1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212, 168, 67, 0.18) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    animation: float 8s ease-in-out infinite, morphBlob 15s ease-in-out infinite;
+}
+
+.hero__glow--2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(212, 168, 67, 0.1) 0%, transparent 70%);
+    bottom: 0;
+    left: -50px;
+    animation: float 10s ease-in-out infinite reverse, morphBlob 18s ease-in-out infinite reverse;
+}
+
+/* Floating geometric shapes */
+.hero__shape {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.07;
+    border: 2px solid var(--gold);
+}
+
+.hero__shape--1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    right: 15%;
+    border-radius: 20%;
+    animation: float 7s ease-in-out infinite, rotate360 30s linear infinite;
+}
+
+.hero__shape--2 {
+    width: 60px;
+    height: 60px;
+    bottom: 25%;
+    right: 25%;
+    border-radius: 50%;
+    animation: float 9s ease-in-out infinite 2s;
+}
+
+.hero__shape--3 {
+    width: 40px;
+    height: 40px;
+    top: 40%;
+    left: 10%;
+    animation: float 6s ease-in-out infinite 1s, rotate360 25s linear infinite reverse;
+}
+
+.hero__content {
+    position: relative;
+    z-index: 1;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212, 168, 67, 0.08);
+    border: 1px solid rgba(212, 168, 67, 0.25);
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+    animation-delay: 0s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shimmer on the badge */
+.hero__badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.15), transparent);
+    animation: badgeShimmer 3s ease-in-out infinite;
+}
+
+@keyframes badgeShimmer {
+    0% { left: -100%; }
+    50%, 100% { left: 100%; }
+}
+
+.hero__badge-dot {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    animation: pulse-ring 1.5s ease infinite;
+    position: relative;
+    z-index: 1;
+}
+
+.hero__name {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+    position: relative;
+}
+
+/* Subtle text shadow glow on the name */
+.hero__name .gold-text {
+    filter: drop-shadow(0 0 30px rgba(200, 149, 46, 0.3));
+}
+
+.hero__role-wrap {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 400;
+    color: var(--white-80);
+    margin-bottom: 28px;
+    font-family: var(--font-mono);
+}
+
+.hero__role-prefix {
+    color: var(--white-60);
+}
+
+.hero__role {
+    color: var(--gold-light);
+    text-shadow: 0 0 20px rgba(200, 149, 46, 0.3);
+}
+
+.hero__cursor {
+    display: inline-block;
+    color: var(--gold);
+    animation: blink 1s step-end infinite;
+    font-weight: 300;
+}
+
+.hero__bio {
+    max-width: 580px;
+    color: var(--white-60);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.hero__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+}
+
+.hero__stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hero__stat-val {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.hero__stat-label {
+    font-size: 0.85rem;
+    color: var(--white-60);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.hero__scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--white-60);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeIn 1s 1s both, float 3s ease-in-out 2s infinite;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.hero__scroll-indicator:hover {
+    color: var(--gold);
+}
+
+.hero__mouse {
+    width: 24px;
+    height: 36px;
+    border: 2px solid var(--white-60);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.hero__scroll-indicator:hover .hero__mouse {
+    border-color: var(--gold);
+}
+
+.hero__wheel {
+    width: 3px;
+    height: 6px;
+    background-color: var(--white-60);
+    border-radius: 2px;
+    animation: scrollWheel 1.5s infinite;
+    transition: background-color 0.3s ease;
+}
+
+.hero__scroll-indicator:hover .hero__wheel {
+    background-color: var(--gold);
+}
+
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+}
+
+/* ---- Light Mode Grid Override for Hero ---- */
+.hero .bg-grid {
+    background-image:
+        linear-gradient(rgba(26, 24, 20, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 24, 20, 0.04) 1px, transparent 1px) !important;
+}
+
+@media (max-width: 768px) {
+    .hero__name {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .hero__stats {
+        gap: 28px;
+    }
+
+    .hero__stat-val {
+        font-size: 1.8rem;
+    }
+
+    .hero__shape {
+        display: none;
+    }
+}

@@ -1,0 +1,305 @@
+.section-label {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+.about {
+    background: var(--black-1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background blob */
+.about::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 149, 46, 0.06) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: morphBlob 20s ease-in-out infinite;
+}
+
+.about::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 149, 46, 0.04) 0%, transparent 70%);
+    bottom: -50px;
+    left: -50px;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: morphBlob 18s ease-in-out infinite reverse;
+}
+
+.about__grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 56px;
+    margin-top: 60px;
+    align-items: center;
+    justify-items: center;
+}
+
+.about__text {
+    max-width: 750px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Avatar */
+.about__avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.about__avatar {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 6s ease-in-out infinite;
+}
+
+.about__avatar-inner {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--black-2), var(--black-3));
+    border: 2px solid rgba(212, 168, 67, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.about__avatar-inner::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0%, var(--gold) 25%, transparent 50%, var(--gold-light) 75%, transparent 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: rotate360 4s linear infinite;
+}
+
+.about__avatar-wrap:hover .about__avatar-inner::before {
+    opacity: 0.6;
+}
+
+.about__avatar-wrap:hover .about__avatar-inner {
+    transform: scale(1.05);
+    border-color: rgba(212, 168, 67, 0.7);
+    box-shadow: 0 0 40px rgba(200, 149, 46, 0.15);
+}
+
+.about__initials {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about__initials img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.about__avatar-wrap:hover .about__initials img {
+    transform: scale(1.1);
+}
+
+.about__avatar-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(212, 168, 67, 0.2);
+    animation: pulse-ring 3s ease-out infinite;
+}
+
+.about__avatar-ring--1 {
+    width: 340px;
+    height: 340px;
+    animation-delay: 0s;
+}
+
+.about__avatar-ring--2 {
+    width: 390px;
+    height: 390px;
+    animation-delay: 1s;
+}
+
+.about__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.about__tag {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--gold-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-family: var(--font-mono);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.about__tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50px;
+    z-index: -1;
+}
+
+.about__tag:hover {
+    border-color: rgba(212, 168, 67, 0.5);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 4px 15px rgba(200, 149, 46, 0.2);
+    color: #fff;
+}
+
+.about__tag:hover::before {
+    opacity: 1;
+}
+
+/* Text */
+.about__greeting {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.about__para {
+    color: var(--white-60);
+    margin-bottom: 16px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: left;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about__para strong {
+    color: var(--white-80);
+    font-weight: 600;
+}
+
+.about__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 22px auto;
+    width: 100%;
+    max-width: 660px;
+    box-sizing: border-box;
+}
+
+.about__fact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+    padding: 9px 24px;
+}
+
+.about__fact-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.about__fact:hover .about__fact-icon {
+    transform: scale(1.2) rotate(8deg);
+}
+
+.about__fact>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1px;
+    width: 100%;
+}
+
+.about__fact-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--white-60);
+    font-weight: 600;
+    text-align: center;
+}
+
+.about__fact-val {
+    font-size: 0.88rem;
+    color: var(--white);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.35;
+}
+
+.about__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+}
+
+@media (max-width: 900px) {
+    .about__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about__avatar-wrap {
+        margin: 0 auto;
+    }
+
+    .about__text {
+        text-align: center;
+    }
+
+    .about__facts {
+        grid-template-columns: 1fr;
+    }
+
+    .about__para {
+        text-align: center;
+    }
+}
